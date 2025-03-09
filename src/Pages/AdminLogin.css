@@ -1,0 +1,109 @@
+/* General Layout */
+.adminlogin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4b79a1, #283e51);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.adminlogin-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 20px;
+}
+
+/* Title and Text */
+.adminlogin-card h2 {
+  color: #4b79a1;
+  font-size: 32px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.adminlogin-card p {
+  color: #6c757d;
+  margin-bottom: 25px;
+  font-size: 16px;
+}
+
+/* Input Fields */
+.adminlogin-card input[type='email'],
+.adminlogin-card input[type='password'] {
+  width: 100%;
+  padding: 12px 18px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  box-sizing: border-box;
+  font-size: 16px;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.adminlogin-card input[type='email']:focus,
+.adminlogin-card input[type='password']:focus {
+  border: 1px solid #4b79a1;
+  box-shadow: 0 0 8px rgba(75, 121, 161, 0.3);
+  outline: none;
+}
+
+/* Button */
+.adminlogin-card button {
+  background: #4b79a1;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  width: 100%;
+  font-size: 18px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.adminlogin-card button:hover {
+  background: #3a5a70;
+  transform: translateY(-2px);
+}
+
+.adminlogin-card button:disabled {
+  background: #a1b1c1;
+  cursor: not-allowed;
+}
+
+/* Card Hover Effect */
+.adminlogin-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Status Message */
+.adminlogin-card p.status-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .adminlogin-card {
+    width: 90%;
+    padding: 25px;
+  }
+
+  .adminlogin-card h2 {
+    font-size: 28px;
+  }
+
+  .adminlogin-card button {
+    font-size: 16px;
+  }
+}
