@@ -5,7 +5,7 @@ function Login() {
   const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value.trim() }); // Trim whitespace
+    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
   };
 
   const handleSubmit = async (e) => {
@@ -18,12 +18,19 @@ function Login() {
         body: JSON.stringify(formData),
       });
       console.log('Response status:', response.status);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
       const data = await response.json();
       console.log('Response data:', data);
-      setMessage(data.message || data.error || 'Unknown error');
+      if (data.error) {
+        setMessage(data.error + (data.details ? `: ${data.details}` : ''));
+      } else {
+        setMessage(data.message || 'Login successful');
+      }
     } catch (err) {
       console.error('Fetch error:', err);
-      setMessage('Error connecting to backend: ' + err.message);
+      setMessage('Error: ' + err.message);
     }
   };
 
