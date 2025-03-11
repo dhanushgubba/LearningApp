@@ -4,111 +4,60 @@ const { MongoClient } = require('mongodb');
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://learn-frontend-static.s3-website-ap-south-1.amazonaws.com',
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type'],
+  })
+);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port number ${PORT}`));
-
+// MongoDB connection
 const uri =
-  'mongodb+srv://dhanush:dhanush@cluster0.ar7z0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+  'mongodb+srv://dhanush:dhanush@cluster0.ar7z0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'; // Update with your MongoDB URI if needed
 const client = new MongoClient(uri);
 
-app.get('/klef/test', async function (req, res) {
-  res.json('Koneru Lakshmaiah Education Foundation');
-});
+async function connectToDB() {
+  try {
+    await client.connect();
+    console.log('Connected to MongoDB');
+  } catch (err) {
+    console.error(err);
+  }
+}
 
-app.post('/klef/cse', async function (req, res) {
-  res.json(req.body);
-});
+connectToDB();
 
-app.get('/', (req, res) => {
-  res.send('Welcome to Learning Hub!');
-});
-
+// Register endpoint
 app.post('/register/signup', async (req, res) => {
-  let conn;
   try {
-    const { collegeid, name, email, contact, password, confirmPassword } =
-      req.body;
-    if (
-      !collegeid ||
-      !name ||
-      !email ||
-      !contact ||
-      !password ||
-      !confirmPassword
-    ) {
-      return res.status(400).json({ error: 'All Fields are required' });
-    }
-    if (password !== confirmPassword) {
-      return res.status(400).json({ error: 'Passwords do not match' });
-    }
-
-    conn = await client.connect();
-    const db = conn.db('Learningapp');
+    const db = client.db('learninghub');
     const collection = db.collection('users');
+    const user = await collection.insertOne(req.body);
+    res.status(200).json({ message: 'Registered Successfully', result: user });
+  } catch (err) {
+    res.status(500).json({ error: 'Registration failed' });
+  }
+});
 
-    const existingUser = await collection.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ error: 'User already exists' });
-    }
-
-    const result = await collection.insertOne({
-      collegeid,
-      name,
-      email,
-      contact,
-      password,
+// Login endpoint
+app.post('/login/signin', async (req, res) => {
+  try {
+    const db = client.db('learninghub');
+    const collection = db.collection('users');
+    const user = await collection.findOne({
+      collegeid: req.body.collegeid,
+      password: req.body.password,
     });
-    await conn.close();
-
-    res.status(200).json({ message: 'Registered Successfully', result });
+    if (user) {
+      res.status(200).json({ message: 'Login Successful' });
+    } else {
+      res.status(401).json({ error: 'Invalid credentials' });
+    }
   } catch (err) {
-    if (conn) await conn.close();
-    res.status(500).json({ error: 'Failed to register', details: err.message });
+    res.status(500).json({ error: 'Login failed' });
   }
 });
-
-app.post('/login/signin', async function (req, res) {
-  let conn;
-  try {
-    const { collegeid, password } = req.body;
-
-    if (!collegeid || !password) {
-      console.log('Collegeid or password missing');
-      return res
-        .status(400)
-        .json({ error: 'collegeid and password are required' });
-    }
-
-    conn = await client.connect();
-    const db = conn.db('Learningapp');
-    const collection = db.collection('users');
-
-    const user = await collection.findOne({ collegeid });
-
-    if (!user) {
-      console.log('User not found');
-      return res.status(400).json({ error: 'Invalid email or password' });
-    }
-
-    const passwordMatch = user.password === password;
-
-    if (!passwordMatch) {
-      console.log('Password mismatch');
-      return res.status(400).json({ error: 'Invalid email or password' });
-    }
-
-    //console.log('Login successful for user:', collegeid);
-    res.status(200).json({ message: 'Login successful' });
-    await conn.close();
-  } catch (err) {
-    if (conn) await conn.close();
-    console.error('Error in login route:', err.message); // Log error details
-    res.status(500).json({ error: 'Failed to login', details: err.message });
-  }
-});
-
 app.post('/adminlogin/signin', async function (req, res) {
   let conn;
   try {
