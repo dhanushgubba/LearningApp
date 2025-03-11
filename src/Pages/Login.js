@@ -26,7 +26,7 @@ const Login = () => {
     }
     setIsSubmitting(true);
     try {
-      const response = await fetch('http://localhost:5000/login/signin', {
+      const response = await fetch('http://13.127.105.80:5000/login/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
