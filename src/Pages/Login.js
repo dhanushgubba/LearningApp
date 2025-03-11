@@ -1,90 +1,66 @@
 import React, { useState } from 'react';
-import './Login.css';
 
-const Login = () => {
-  const [formData, setFormData] = useState({
-    collegeid: '',
-    password: '',
-  });
-  const [statusMessage, setStatusMessage] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+function Login() {
+  const [formData, setFormData] = useState({ collegeid: '', password: '' });
+  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { collegeid, password } = formData;
-    if (!collegeid || !password) {
-      setStatusMessage('All Fields are required');
-      return;
-    }
-    setIsSubmitting(true);
     try {
+      console.log('Sending login request with data:', formData);
       const response = await fetch('http://13.127.105.80:5000/login/signin', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+      console.log('Response status:', response.status);
+      console.log('Response headers:', [...response.headers.entries()]); // Log headers
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.log('Error response text:', errorText);
+        throw new Error(
+          `HTTP error! Status: ${response.status}, Details: ${errorText}`
+        );
+      }
       const data = await response.json();
-      if (response.ok) {
-        localStorage.setItem('userID', collegeid);
-        setStatusMessage('Login Successful');
-        window.location.href = '/dashboard';
+      console.log('Response data:', data);
+      if (data.error) {
+        setMessage(data.error + (data.details ? `: ${data.details}` : ''));
       } else {
-        setStatusMessage(data.error || 'Login Failed');
+        setMessage(data.message || 'Login successful');
       }
     } catch (err) {
-      setStatusMessage('An error occurred. Please try again.');
-    } finally {
-      setIsSubmitting(false);
+      console.error('Fetch error:', err);
+      setMessage('Error: ' + err.message);
     }
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <h2>Welcome Back to LearningHub</h2>
-        <p>Sign in to continue your learning journey</p>
-        <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <input
-              type="text"
-              name="collegeid"
-              placeholder="College ID"
-              value={formData.collegeid}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="input-group">
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <button type="submit" className="login-btn" disabled={isSubmitting}>
-            {isSubmitting ? 'Signing In...' : 'Sign In'}
-          </button>
-          <p className="register-link">
-            Don't have an account? <a href="/register">Register here</a>
-          </p>
-          {statusMessage && <p className="status-message">{statusMessage}</p>}
-        </form>
-      </div>
+    <div>
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          name="collegeid"
+          placeholder="College ID"
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Login</button>
+      </form>
+      <p>{message}</p>
     </div>
   );
-};
+}
 
 export default Login;
