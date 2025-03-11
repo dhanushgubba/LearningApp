@@ -69,7 +69,7 @@ app.post('/register/signup', async (req, res) => {
   }
 });
 
-app.post('/login/signin', async function (req, res) {
+/*app.post('/login/signin', async function (req, res) {
   let conn;
   try {
     const { collegeid, password } = req.body;
@@ -81,8 +81,47 @@ app.post('/login/signin', async function (req, res) {
         .json({ error: 'collegeid and password are required' });
     }
 
-    // Use the existing global client connection
-    const db = client.db('learninghub'); // Match with registration database
+    conn = await client.connect();
+    const db = conn.db('Learningapp');
+    const collection = db.collection('users');
+
+    const user = await collection.findOne({ collegeid });
+
+    if (!user) {
+      console.log('User not found');
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
+
+    const passwordMatch = user.password === password;
+
+    if (!passwordMatch) {
+      console.log('Password mismatch');
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
+
+    //console.log('Login successful for user:', collegeid);
+    res.status(200).json({ message: 'Login successful' });
+    await conn.close();
+  } catch (err) {
+    if (conn) await conn.close();
+    console.error('Error in login route:', err.message); // Log error details
+    res.status(500).json({ error: 'Failed to login', details: err.message });
+  }
+});
+*/
+app.post('/login/signin', async function (req, res) {
+  try {
+    const { collegeid, password } = req.body;
+
+    if (!collegeid || !password) {
+      console.log('Collegeid or password missing');
+      return res
+        .status(400)
+        .json({ error: 'collegeid and password are required' });
+    }
+
+    // Use the global client connection (consistent with registration)
+    const db = client.db('learninghub'); // Match registration database
     const collection = db.collection('users');
 
     const user = await collection.findOne({ collegeid });
@@ -92,7 +131,7 @@ app.post('/login/signin', async function (req, res) {
       return res.status(400).json({ error: 'Invalid collegeid or password' });
     }
 
-    const passwordMatch = user.password === password; // Assuming plain text for now
+    const passwordMatch = user.password === password; // Plain text comparison
 
     if (!passwordMatch) {
       console.log('Password mismatch for collegeid:', collegeid);
@@ -103,12 +142,13 @@ app.post('/login/signin', async function (req, res) {
     res.status(200).json({
       message: 'Login successful',
       user: { collegeid: user.collegeid },
-    }); // Return user info
+    });
   } catch (err) {
     console.error('Error in login route:', err.message);
     res.status(500).json({ error: 'Failed to login', details: err.message });
   }
 });
+
 app.post('/adminlogin/signin', async function (req, res) {
   let conn;
   try {

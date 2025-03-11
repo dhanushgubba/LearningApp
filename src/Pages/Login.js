@@ -5,14 +5,14 @@ function Login() {
   const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value.trim() }); // Trim whitespace
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       console.log('Sending login request with data:', formData);
-      const response = await fetch('http://13.127.105.80:5000/login/signin', {
+      const response = await fetch('http://<ec2-public-ip>:5000/login/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
