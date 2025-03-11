@@ -40,13 +40,16 @@ const Register = () => {
     setStatusMessage('');
 
     try {
-      const response = await fetch('http://localhost:5000/register/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        'http://13.127.105.80:5000/register/signup',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         setStatusMessage('Registration successful!');
