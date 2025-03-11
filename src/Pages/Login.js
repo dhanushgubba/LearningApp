@@ -11,14 +11,21 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(
+        'Sending login request with URL:',
+        'http://<ec2-public-ip>:5000/login/signin'
+      );
       console.log('Sending login request with data:', formData);
       const response = await fetch('http://13.127.105.80:5000/login/signin', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: '*/*', // Added to help with CORS
+        },
         body: JSON.stringify(formData),
       });
-      console.log('Response status:', response.status);
-      console.log('Response headers:', [...response.headers.entries()]); // Log headers
+      console.log('Response received, status:', response.status);
+      console.log('Response headers:', [...response.headers.entries()]);
       if (!response.ok) {
         const errorText = await response.text();
         console.log('Error response text:', errorText);
