@@ -121,7 +121,7 @@ app.post('/login/signin', async function (req, res) {
     }
 
     // Use the global client connection (consistent with registration)
-    const db = client.db('learninghub'); // Match registration database
+    const db = client.db('Learningapp'); // Match registration database
     const collection = db.collection('users');
 
     const user = await collection.findOne({ collegeid });
