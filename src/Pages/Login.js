@@ -11,14 +11,18 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log('Sending login request with data:', formData);
       const response = await fetch('http://13.127.105.80:5000/login/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+      console.log('Response status:', response.status);
       const data = await response.json();
+      console.log('Response data:', data);
       setMessage(data.message || data.error || 'Unknown error');
     } catch (err) {
+      console.error('Fetch error:', err);
       setMessage('Error connecting to backend: ' + err.message);
     }
   };
