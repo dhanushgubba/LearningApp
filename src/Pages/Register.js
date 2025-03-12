@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import './Register.css';
 function Register() {
   const [formData, setFormData] = useState({
     collegeid: '',
@@ -18,14 +18,11 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        'http://65.0.109.210 :5000/register/signup',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch('http://65.0.109.210:5000/register/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
       const data = await response.json();
       setMessage(data.message || data.error || 'Unknown error');
     } catch (err) {
