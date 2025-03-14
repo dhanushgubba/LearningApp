@@ -5,7 +5,7 @@ import './Login.css';
 function Login() {
   const [formData, setFormData] = useState({ collegeid: '', password: '' });
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
@@ -14,21 +14,27 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://43.204.219.90:5000/login/signin', {
+      console.log('Sending login request with data:', formData);
+      const response = await fetch('http://13.201.222.171:5000/login/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
+      console.log('Response status:', response.status);
       const data = await response.json();
+      console.log('Response data:', data);
+
       if (response.ok) {
         setMessage('Login successful!');
         localStorage.setItem('collegeid', formData.collegeid);
+        console.log('Navigating to /dashboard');
         navigate('/dashboard');
       } else {
         setMessage(data.message || data.error || 'Unknown error');
       }
     } catch (err) {
+      console.error('Fetch error:', err);
       setMessage('Error connecting to backend: ' + err.message);
     }
   };
