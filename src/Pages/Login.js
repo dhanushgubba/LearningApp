@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 function Login() {
   const [formData, setFormData] = useState({ collegeid: '', password: '' });
   const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // Hook for navigation
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
   };
 
   const handleSubmit = async (e) => {
@@ -21,7 +23,10 @@ function Login() {
       const data = await response.json();
       if (response.ok) {
         setMessage('Login successful!');
-        window.location.href = '/dashboard';
+        // Store user info (optional)
+        localStorage.setItem('collegeid', formData.collegeid);
+        // Navigate to dashboard
+        navigate('/dashboard');
       } else {
         setMessage(data.message || data.error || 'Unknown error');
       }
