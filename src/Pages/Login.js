@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 function Login() {
   const [formData, setFormData] = useState({ collegeid: '', password: '' });
   const [message, setMessage] = useState('');
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,9 +17,11 @@ function Login() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+
       const data = await response.json();
       if (response.ok) {
-        navigate('/dashboard');
+        setMessage('Login successful!');
+        window.location.href = '/dashboard';
       } else {
         setMessage(data.message || data.error || 'Unknown error');
       }
@@ -32,24 +32,35 @@ function Login() {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="collegeid"
-          placeholder="College ID"
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
-      <p className="error-message">{message}</p>
+      <div className="login-card">
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <input
+              name="collegeid"
+              placeholder="College ID"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit" className="login-btn">
+            Login
+          </button>
+        </form>
+        <p>{message}</p>
+        <p className="register-link">
+          Don't have an account? <a href="/register">Register here</a>
+        </p>
+      </div>
     </div>
   );
 }
