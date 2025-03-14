@@ -31,51 +31,71 @@ function Register() {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="collegeid"
-          placeholder="College ID"
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="name"
-          placeholder="Name"
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="contact"
-          placeholder="Contact"
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="confirmPassword"
-          type="password"
-          placeholder="Confirm Password"
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Register</button>
-      </form>
-      <p>{message}</p>
+    <div className="register-container">
+      <div className="register-card">
+        <h2>Register</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <input
+              name="collegeid"
+              placeholder="College ID"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <input
+              name="name"
+              placeholder="Name"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <input
+              name="contact"
+              placeholder="Contact"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <input
+              name="confirmPassword"
+              type="password"
+              placeholder="Confirm Password"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit" className="register-btn">
+            Register
+          </button>
+        </form>
+        {message && <div className="message-box">{message}</div>}
+      </div>
     </div>
   );
 }
