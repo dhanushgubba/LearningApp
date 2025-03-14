@@ -23,9 +23,7 @@ function Login() {
       const data = await response.json();
       if (response.ok) {
         setMessage('Login successful!');
-        // Store user info (optional)
         localStorage.setItem('collegeid', formData.collegeid);
-        // Navigate to dashboard
         navigate('/dashboard');
       } else {
         setMessage(data.message || data.error || 'Unknown error');
