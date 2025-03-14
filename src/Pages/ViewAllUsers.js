@@ -10,7 +10,9 @@ const ViewAllUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/admin/users');
+        const response = await axios.get(
+          'http://13.127.102.201:5000/admin/users'
+        );
         setUsers(response.data);
         setLoading(false);
       } catch (err) {

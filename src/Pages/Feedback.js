@@ -17,13 +17,16 @@ const Feedback = () => {
     e.preventDefault(); // Prevent default form submission
 
     try {
-      const response = await fetch('http://localhost:5000/feedback/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData), // Send the correct variable
-      });
+      const response = await fetch(
+        'http://13.127.102.201:5000/feedback/submit',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData), // Send the correct variable
+        }
+      );
 
       if (response.ok) {
         alert('Feedback submitted successfully!');
