@@ -27,13 +27,16 @@ const AdminLogin = () => {
     }
     setIsSubmitting(true);
     try {
-      const response = await fetch('http://localhost:5000/adminlogin/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        'http://13.127.102.201:5000/adminlogin/signin',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const data = await response.json();
       if (response.ok) {
