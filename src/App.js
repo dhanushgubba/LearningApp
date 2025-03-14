@@ -61,31 +61,10 @@ const App = () => {
           <Route path="/mcourses" element={<BCourses />} />
 
           {/* Protecting /adminhome route */}
-          <Route
-            path="/adminhome"
-            element={
-              <PrivateRoute>
-                <AdminHome />
-              </PrivateRoute>
-            }
-          />
+          <Route path="/adminhome" element={<AdminHome />} />
           <Route path="/feedback" element={<Feedback />} />
-          <Route
-            path="/viewallusers"
-            element={
-              <PrivateRoute>
-                <ViewAllUsers />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/addusers"
-            element={
-              <PrivateRoute>
-                <AddUsers />
-              </PrivateRoute>
-            }
-          />
+          <Route path="/viewallusers" element={<ViewAllUsers />} />
+          <Route path="/addusers" element={<AddUsers />} />
           <Route path="/addcourses" element={<AddCourses />} />
         </Routes>
       </>
