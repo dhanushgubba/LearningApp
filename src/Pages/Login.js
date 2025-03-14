@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
+
 function Login() {
   const [formData, setFormData] = useState({ collegeid: '', password: '' });
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,7 +20,11 @@ function Login() {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      setMessage(data.message || data.error || 'Unknown error');
+      if (response.ok) {
+        navigate('/dashboard');
+      } else {
+        setMessage(data.message || data.error || 'Unknown error');
+      }
     } catch (err) {
       setMessage('Error connecting to backend: ' + err.message);
     }
@@ -42,7 +49,7 @@ function Login() {
         />
         <button type="submit">Login</button>
       </form>
-      <p>{message}</p>
+      <p className="error-message">{message}</p>
     </div>
   );
 }
