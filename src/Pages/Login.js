@@ -27,9 +27,11 @@ function Login() {
 
       if (response.ok) {
         setMessage('Login successful!');
-        localStorage.setItem('collegeid', formData.collegeid);
+        // Set authentication state using collegeid
+        localStorage.setItem('collegeid', formData.collegeid); // Keep this
+        localStorage.setItem('isAuthenticated', 'true'); // Ensure this matches PrivateRoute
         console.log('Navigating to /dashboard');
-        navigate('/dashboard');
+        navigate('/dashboard', { replace: true });
       } else {
         setMessage(data.message || data.error || 'Unknown error');
       }
