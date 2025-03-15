@@ -31,7 +31,7 @@ const AddUsers = () => {
     setStatusMessage('');
 
     try {
-      const response = await fetch('http://13.127.102.201:5000/add/users', {
+      const response = await fetch('http://13.201.74.143:5000/add/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

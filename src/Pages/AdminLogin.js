@@ -28,7 +28,7 @@ const AdminLogin = () => {
     setIsSubmitting(true);
     try {
       const response = await fetch(
-        'http://13.127.102.201:5000/adminlogin/signin',
+        'http://13.201.74.143:5000/adminlogin/signin',
         {
           method: 'POST',
           headers: {

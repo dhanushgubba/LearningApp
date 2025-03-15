@@ -9,7 +9,9 @@ const AdminHome = () => {
   useEffect(() => {
     const fetchAdminData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/viewall/users');
+        const response = await axios.get(
+          'http://13.201.74.143:5000/viewall/users'
+        );
         if (response.data && response.data.length > 0) {
           setAdminName(response.data[0].name);
         } else {

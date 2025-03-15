@@ -32,7 +32,7 @@ const AddCourses = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://13.127.102.201:5000/api/courses', {
+      const response = await fetch('http://13.201.74.143:5000/api/courses', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

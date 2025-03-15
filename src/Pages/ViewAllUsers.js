@@ -11,7 +11,7 @@ const ViewAllUsers = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          'http://13.127.102.201:5000/admin/users'
+          'http://13.201.74.143:5000/admin/users'
         );
         setUsers(response.data);
         setLoading(false);
