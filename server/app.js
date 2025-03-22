@@ -121,8 +121,7 @@ app.post('/login/signin', async function (req, res) {
         .json({ error: 'collegeid and password are required' });
     }
 
-    // Use the global client connection (consistent with registration)
-    const db = client.db('Learningapp'); // Match registration database
+    const db = client.db('Learningapp');
     const collection = db.collection('users');
 
     const user = await collection.findOne({ collegeid });
@@ -132,7 +131,7 @@ app.post('/login/signin', async function (req, res) {
       return res.status(400).json({ error: 'Invalid collegeid or password' });
     }
 
-    const passwordMatch = user.password === password; // Plain text comparison
+    const passwordMatch = user.password === password;
 
     if (!passwordMatch) {
       console.log('Password mismatch for collegeid:', collegeid);
