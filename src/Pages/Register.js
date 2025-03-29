@@ -19,7 +19,7 @@ function Register() {
     e.preventDefault();
     try {
       const response = await fetch(
-        'http://43.204.115.44:5000/register/signup',
+        'http://43.204.234.158:5000/register/signup',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

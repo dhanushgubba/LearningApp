@@ -18,7 +18,7 @@ const Feedback = () => {
 
     try {
       const response = await fetch(
-        'http://13.201.18.238:5000/feedback/submit',
+        'http://43.204.234.158:5000/feedback/submit',
         {
           method: 'POST',
           headers: {

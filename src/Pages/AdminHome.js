@@ -10,7 +10,7 @@ const AdminHome = () => {
     const fetchAdminData = async () => {
       try {
         const response = await axios.get(
-          'http://43.204.115.44:5000/viewall/users'
+          'http://43.204.234.158:5000/viewall/users'
         );
         if (response.data && response.data.length > 0) {
           setAdminName(response.data[0].name);
