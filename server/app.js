@@ -148,7 +148,6 @@ app.post('/login/signin', async function (req, res) {
     res.status(500).json({ error: 'Failed to login', details: err.message });
   }
 });
-
 app.post('/adminlogin/signin', async function (req, res) {
   let conn;
   try {
