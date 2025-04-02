@@ -18,7 +18,7 @@ const Home = () => {
       <section className="features">
         <div className="feature-card">
           <h2>Interactive Courses</h2>
-          <p>Engage with interactive lessons and quizzes.</p>
+          <p>Engage with interactive lessons and quizzes in website.</p>
         </div>
         <div className="feature-card">
           <h2>Expert Tutors</h2>
