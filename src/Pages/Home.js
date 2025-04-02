@@ -10,7 +10,7 @@ const Home = () => {
         <h1>Welcome to LearningHub</h1>
         <p>Discover and share knowledge with a community of learners.</p>
         <button className="cta-button">
-          <Link to="/login">Get Started</Link>
+          <Link to="/login">Get Started Here</Link>
         </button>
       </header>
 
